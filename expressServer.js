@@ -6,6 +6,7 @@ let petsPath = path.join(__dirname, 'pets.json');
 
 //using express.
 let express = require('express');
+console.log("Express obj:", express);
 let app = express();
 let port = process.env.PORT || 8000;
 
@@ -50,3 +51,5 @@ app.use(function(req, res) {
 app.listen(port, function() {
   console.log('Listening on port', port);
 });
+
+module.exports = app;
