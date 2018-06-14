@@ -10,7 +10,14 @@ console.log("Express obj:", express);
 let app = express();
 let port = process.env.PORT || 8000;
 
-app.disable('x-powered-by');//hides that it's powered by Express.
+//hides that it's powered by Express.
+app.disable('x-powered-by');
+
+//experimenting with greeting
+app.get("/hi", function (req, res) {
+  let name = req.query.name;
+  res.send("Hello, " + name);
+});
 
 //http GET localhost:8000/pets
 app.get('/pets', function(req, res) {
@@ -26,7 +33,7 @@ app.get('/pets', function(req, res) {
   });
 });
 
-//http GET localhost:8000/pets/0
+//http GET localhost:8000/pets/0 & /1
 app.get('/pets/:id', function(req, res) {
   fs.readFile(petsPath, 'utf8', function(err, petsJSON){
     if (err) {
@@ -37,6 +44,7 @@ app.get('/pets/:id', function(req, res) {
     let id = Number.parseInt(req.params.id);
     let pets = JSON.parse(petsJSON);
 
+//http GET localhost:8000/pets/-1 or /2
     if (id < 0 || id >= pets.length || Number.isNaN(id)) {
       return res.sendStatus(404);
     }
@@ -53,7 +61,6 @@ app.post('/pets', function (req, res) {
 app.use(function(req, res) {
   res.set('Content-Type', 'text/plain');
   res.sendStatus(404);
-  console.log(pets);
 });
 
 app.listen(port, function() {
