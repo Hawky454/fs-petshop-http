@@ -11,35 +11,43 @@ let port = process.env.PORT || 8000;
 let morgan = require('morgan');
 let bodyParser = require('body-parser');
 
+//disables that it's powered by Express
 app.disable('x-powered-by');
 app.use(morgan('short'));
 app.use(bodyParser.json());
 
-app.get('/pets', function(req, res) {
-  fs.readFile(petsPath, 'utf8', function(err, petsJSON) {
+//1st middlewar filter looking for /pets
+app.get('/pets', (req, res) => {
+  fs.readFile(petsPath, 'utf8', (err, petsJSON) => {
     if (err) {
-      console.error(err.stack);
+      console.error('err.stack');
       return res.sendStatus(500);
     }
+
     let pets = JSON.parse(petsJSON);
 
+    //this actually send response to terminal
     res.send(pets);
   });
 });
 
-app.post('/pets', function(req,res) {
-  fs.readFile(petsPath, 'utf8', function(readErr, petsJSON) {
+//1st post excepting data to the database
+app.post('/pets', (req, res) => {
+  fs.readFile(petsPath, 'utf8', (readErr, petsJSON) => {
     if (readErr) {
       console.error(readErr.stack);
       return res.sendStatus(500);
     }
+    //excepted POSTS age, kind, name
     let pets = JSON.parse(petsJSON);
     let age = req.body.age;
     let kind = req.body.kind;
     let name = req.body.name;
 
     let newPet = {
-      age, kind, name
+      age,
+      kind,
+      name
     };
 
     if (!age || !kind || !name) {
@@ -49,7 +57,7 @@ app.post('/pets', function(req,res) {
 
     let newPetsJSON = JSON.stringify(pets);
 
-    fs.writeFile(petsPath, newPetsJSON, function(writeErr) {
+    fs.writeFile(petsPath, newPetsJSON,(writeErr) => {
       if (writeErr) {
         console.error(writeErr.stack);
         return res.sendStatus(500);
@@ -60,8 +68,8 @@ app.post('/pets', function(req,res) {
   });
 });
 
-app.get('/pets/:id', function(req, res) {
-  fs.readFile(petsPath, 'utf8', function(err, newPetsJSON) {
+app.get('/pets/:id', (req, res) => {
+  fs.readFile(petsPath, 'utf8', (err, newPetsJSON) => {
     if (err) {
       console.error(err.stack);
       return res.sendStatus(500);
@@ -76,11 +84,12 @@ app.get('/pets/:id', function(req, res) {
     res.send(pets[id]);
   });
 });
-app.use(function(req, res) {
+//middleware function request, response
+app.use((req, res) => {
   res.sendStatus(404);
 });
 
-app.listen(port, function() {
+app.listen(port, () => {
   console.log('Listen on port', port);
 });
 
