@@ -1,1 +1,13 @@
-[{"age":7,"kind":"rainbow","name":"fido"},{"age":5,"kind":"snake","name":"Buttons"},{"age":"3","kind":"parakeet","name":"Cornflake"}]
+[{  "age":7,
+    "kind":"rainbow",
+    "name":"fido"},
+      {"age":5,
+       "kind":"snake",
+       "name":"Buttons"},
+         {"age":"3",
+          "kind":"parakeet",
+          "name":"Cornflake"},
+            {"age": "4",
+             "kind": "human",
+             "name": "Esme Linn miller"
+                }]

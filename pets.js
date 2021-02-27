@@ -6,6 +6,7 @@ let path = require('path');
 //^imports the library
 let petsPath = path.join(__dirname, 'pets.json');
 // '/Users/DavidMiller/Projects/Galvanize_this/fs-pet-shop' + 'pets.json' (it concatinates)
+// update 2-26-21 don't know why the above address still works? maybe that is why my other project can't find module, I changed it to the proper path now in the pets.js file: ../Projects/q2/fs-pet-shop but it throw the same error the others are throwing 'code: MODULE_NOT_FOUND
 
 let commands = ["read", "create", "update", "destroy"];
 
